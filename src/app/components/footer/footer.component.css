@@ -1,0 +1,29 @@
+.footer {
+  background: #2b2b2b;
+  color: #ddd;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin-bottom: 1rem;
+  color: #ffa726; /* Orangish highlight for copyright */
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #ddd;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #ffa726;
+}

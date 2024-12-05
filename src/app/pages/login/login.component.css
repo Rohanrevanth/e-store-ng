@@ -1,0 +1,119 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1a1a1a; 
+  /* background: linear-gradient(135deg, #1a1a1a, #333); */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Form Wrapper */
+.form-wrapper {
+  background: #2b2b2b; /* Darker gray for form background */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+h2 {
+  color: #ffa726; /* Orangish color for headings */
+  margin-bottom: 10px;
+}
+
+p {
+  color: #ddd; /* Light gray for subtext */
+  margin-bottom: 1.5rem;
+}
+
+/* Input Group */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #444; /* Subtle border for inputs */
+  border-radius: 8px;
+  outline: none;
+  background: #1a1a1a; /* Black background for inputs */
+  color: #fff; /* White text */
+  transition: all 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #ffa726; /* Orangish border on focus */
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #888; /* Subtle label color */
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 8px;
+  font-size: 0.75rem;
+  color: #ffa726; /* Orangish label color */
+  background: #2b2b2b; /* Match form background */
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+/* Button */
+.btn {
+  display: block;
+  width: 100%; /* Align with input width */
+  padding: 12px;
+  font-size: 1rem;
+  background: #ffa726; /* Orangish button */
+  color: #1a1a1a; /* Black text for contrast */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #ff8a00; /* Darker orange on hover */
+}
+
+/* Toggle Text */
+.toggle-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #ddd; /* Light gray for toggle text */
+}
+
+.toggle-text a {
+  color: #ffa726; /* Orangish link */
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.toggle-text a:hover {
+  text-decoration: underline;
+}
