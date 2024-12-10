@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,15 +12,29 @@ export class ProductService {
 
   // Login API call
   getCategories(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/categories`, {  });
+    return this.http.get(`${this.apiUrl}/categories`);
   }
 
   getBestSellers(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/best-sellers`, {});
+    return this.http.get(`${this.apiUrl}/best-sellers`);
   }
 
-  getProducts(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/products`, {});
+  getAllProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/all-products`);
+  }
+
+  getProducts(category : string): Observable<any> {
+    var body = {
+      category : category
+    }
+    return this.http.post(`${this.apiUrl}/get-products`, JSON.stringify(body));
+  }
+
+  getImage(query : string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `MzoYZg8oEPDg0oY0Xkt8nfTL8pD2stIEbdhiH2oIZLUn7MJq8vG8yxYN`,
+    });
+    return this.http.get(`https://api.pexels.com/v1/search?query=${query}&orientation=potrait&size=small&per_page=1`, { headers });
   }
   
 }

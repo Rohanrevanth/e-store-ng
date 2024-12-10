@@ -4,6 +4,7 @@
 <div class="hero-banner">
   <div class="hero-content">
       <h1>Explore {{ slug | titlecase }}</h1>
+      <p>{{ category.description }}</p>
   </div>
 </div>
 
@@ -11,7 +12,8 @@
 <div class="products-container">
   <div class="products-grid">
     <div class="product-card" *ngFor="let product of products">
-      <img [src]="product.image" alt="{{ product.name }}" />
+      <img [src]="product.image" alt="{{ product.name }}" onError="this.onerror=null;this.src='https://via.placeholder.com/500x500?text=Image+Not+Available';" />
+
       <div class="product-info">
         <h3 style="margin: 0px;">{{ product.name }}</h3>
         <p style="margin: 0px; margin-top: 5px;">${{ product.price.toFixed(2) }}</p>
