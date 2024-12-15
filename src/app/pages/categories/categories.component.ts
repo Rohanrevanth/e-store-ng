@@ -5,10 +5,11 @@ import { FooterComponent } from '../../components/footer/footer.component'; // U
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ProductDisplayComponent } from '../../components/product-display/product-display.component';
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, HeaderComponent, FooterComponent, ProductDisplayComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -18,6 +19,10 @@ export class CategoriesComponent implements OnInit {
   category : any = {};
 
   products : any[] = [];
+  cart : any = {}
+
+  modalProduct : any = {}
+  displayProduct = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +35,23 @@ export class CategoriesComponent implements OnInit {
       this.slug = params.get('slug');
       console.log('Slug:', this.slug); // Log the slug for debugging
       this.getProducts();
+      this.getUserCart();
+    });
+  }
+  
+  getUserCart(): void {
+    this.productService.getUserCart().subscribe({
+      next: (response) => {
+        console.log(response)
+        this.cart = response.data;
+        console.log(this.cart)
+        // localStorage.setItem("categories",JSON.stringify(this.categories))
+        // this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err)
+        // this.isLoading = false;
+      },
     });
   }
 
@@ -52,11 +74,13 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  cart: any[] = [];
+  openProductModal(product : any) {
+    this.modalProduct = product;
+    this.displayProduct = true;
+  }
 
-  addToCart(product: any) {
-    this.cart.push(product);
-    alert(`${product.name} has been added to your cart!`);
+  closeModal() {
+    this.displayProduct = false;
   }
 }
 

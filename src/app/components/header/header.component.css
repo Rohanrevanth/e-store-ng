@@ -1,51 +1,61 @@
+/* Header styles */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: #1a1a1a;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  padding: 10px 20px;
+  color: white;
+  /* margin-top: 10px; */
 }
 
+/* Logo */
 .logo h1 {
-  color: #ffa726;
   font-size: 1.8rem;
-  font-weight: bold;
+  color: #ffa726;
   cursor: pointer;
 }
 
-.navigation {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #ddd;
-  font-size: 1rem;
-  transition: color 0.3s;
-}
-
-.nav-link:hover {
-  color: #ffa726;
-}
-
+/* Cart section */
 .cart {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
+  gap: 15px;
 }
 
+/* Icon container */
+.icon-container {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Cart Icon */
 .cart-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: white;
 }
 
+/* Profile Icon */
+.profile-icon {
+  font-size: 2rem;
+  color: #ffa726; /* Orangish color for profile icon */
+  transition: color 0.3s ease;
+}
+
+.profile-icon:hover {
+  color: #fb8c00; /* Darker orangish on hover */
+}
+
+/* Cart count badge */
 .cart-count {
-  background: #ffa726;
-  color: #1a1a1a;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ffa726;
+  color: white;
+  font-size: 0.8rem;
   font-weight: bold;
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  text-align: center;
 }

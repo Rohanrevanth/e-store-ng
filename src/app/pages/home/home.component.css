@@ -89,6 +89,7 @@
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s;
+  cursor: pointer;
 }
 
 .product-carousel .product-card:hover {
@@ -114,6 +115,8 @@
   padding: 10px 15px;
   transition: background 0.3s;
   margin-bottom: 25px;
+  float: right;
+  margin-right: 10px;
 }
 
 .product-carousel .product-card button:hover {

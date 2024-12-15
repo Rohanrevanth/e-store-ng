@@ -1,1 +1,143 @@
-<p>checkout works!</p>
+<div style="background-color: #2b2b2b;">
+<app-header></app-header>
+
+<!-- Hero Section -->
+<div class="hero-banner">
+  <div class="hero-content">
+    <h1>Checkout</h1>
+    <p>Your products are one step closer to your doorstep!</p>
+    <!-- <button class="btn hero-btn">Shop Now</button> -->
+  </div>
+</div>
+
+<div class="checkout-container">
+  <div class="checkout-body">
+    <!-- Shipping Details -->
+    <div class="section">
+      <h3>Shipping Details</h3>
+      <div style="display: flex; overflow: auto; margin-bottom: 15px;">
+        <div *ngFor="let address of addressList; let i=index" class="address-item" (click)="selectAddress(address, i)" [ngClass]="{'selected-address': editAddressIndex === i}" >
+          <i class="fas fa-edit edit-btn" (click)="editAddress(address, i); $event.stopPropagation()"></i>
+          <i class="fas fa-trash delete-addr-btn" (click)="deleteAddress(address, i); $event.stopPropagation()"></i>
+          <p>{{address.name}}</p>
+          <p>{{address.address}}</p>
+          <p>{{address.city}}, {{address.zip}}</p>
+          <p>{{address.phone}}</p>
+        </div>
+        <div class="address-item" (click)="addNewAddress()" style="display: flex; align-items: center; justify-content: center; height: 100px;">
+          <span>Add Address</span>
+        </div>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" [(ngModel)]="shippingDetails.name" name="name" required [disabled]="!isAddressEditing" />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Shipping Address</label>
+          <input type="text" id="address" [(ngModel)]="shippingDetails.address" name="address" required [disabled]="!isAddressEditing" />
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" [(ngModel)]="shippingDetails.city" name="city" required [disabled]="!isAddressEditing" />
+        </div>
+
+        <div class="form-group">
+          <label for="zip">ZIP Code</label>
+          <input type="text" id="zip" [(ngModel)]="shippingDetails.zip" name="zip" required [disabled]="!isAddressEditing" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="text" id="phone" [(ngModel)]="shippingDetails.phone" name="phone" required [disabled]="!isAddressEditing" />
+        </div>
+      </form>
+      <button type="submit" (click)="saveAddress()" class="apply-coupon-btn" style="float: right;" *ngIf="isAddressEditing">Save Address</button>
+    </div>
+
+<!-- Order Summary -->
+<div class="section">
+  <h3>Order Summary</h3>
+  <div class="order-summary">
+    <div *ngFor="let item of cart.items; let i = index" class="order-item"(click)="openProductModal(item.product)">
+      <img [src]="item.product.image" alt="{{ item.product.name }}" style="cursor: pointer;"/>
+      <div class="order-details">
+        <p class="product-name">{{ item.product.name }}</p>
+        <p>Price: ₹{{ item.product.price.toFixed(2) }}</p>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity(i)" [disabled]="item.quantity <= 1">-</button>
+          <input type="text" [value]="item.quantity" readonly />
+          <button (click)="increaseQuantity(i)">+</button>
+        </div>
+        <p>Total: ₹{{ (item.product.price * item.quantity).toFixed(2) }}</p>
+      </div>
+      <button class="delete-btn" (click)="removeItem(i)">Remove</button>
+    </div>
+    <div class="total">
+      <p>Total Price: ₹{{ totalPrice.toFixed(2) }}</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- Coupon Code Section -->
+<div class="section coupon-section">
+  <h3>Apply Coupon</h3>
+  <div class="coupon-container">
+    <input
+      type="text"
+      [(ngModel)]="couponCode"
+      placeholder="Enter coupon code"
+      class="coupon-input"
+    />
+    <button (click)="applyCoupon()" class="apply-coupon-btn">Apply</button>
+  </div>
+  <p *ngIf="couponMessage" class="coupon-message">{{ couponMessage }}</p>
+</div>
+
+
+    <!-- Payment Options -->
+    <div class="section">
+      <h3>Payment</h3>
+      <div class="payment-options">
+        <div class="payment-option">
+          <label>
+            <input type="radio" disabled name="paymentMethod" [(ngModel)]="paymentMethod" value="credit" /> Credit Card
+          </label>
+        </div>
+        <div class="payment-option">
+          <label>
+            <input type="radio" disabled name="paymentMethod" [(ngModel)]="paymentMethod" value="debit" /> Debit Card
+          </label>
+        </div>
+        <div class="payment-option">
+          <label>
+            <input type="radio" disabled name="paymentMethod" [(ngModel)]="paymentMethod" value="paypal" /> PayPal
+          </label>
+        </div>
+        <div class="payment-option">
+          <label>
+            <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="cod" /> Cash on Delivery
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Place Order Button -->
+    <div class="place-order">
+      <button (click)="placeOrder()" [disabled]="isDisablePlaceOrder()" [class.disabled]="isDisablePlaceOrder()">Place Order</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<app-product-display 
+  *ngIf="displayProduct"
+  [product]="modalProduct"
+  [cart]="cart"
+  (closeModal)="closeModal()">
+</app-product-display>

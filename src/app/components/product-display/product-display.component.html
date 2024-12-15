@@ -1,0 +1,28 @@
+<div id="productModal" class="modal" (click)="onBackdropClick()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close-btn" (click)="onCloseModal()">&times;</span>
+    <div class="modal-header">
+      <img [src]="product.image" alt="Product Image" class="modal-image"/>
+      <div class="modal-details">
+        <h2 class="modal-title">{{ product.name }}</h2>
+        <p class="modal-description">{{ product.description }}</p>
+        <div class="modal-details-section">
+          <h3>Product Details</h3>
+          <p><strong>Screen Size:</strong> 6.7 inches</p>
+          <p><strong>Battery:</strong> 4500mAh</p>
+          <p><strong>Camera:</strong> 108MP</p>
+          <p><strong>Processor:</strong> Octa-core</p>
+        </div>
+        <div>
+            <span>
+                <strong>Price:</strong>
+                <strong class="modal-price">₹ {{ product.price.toFixed(2) }}</strong>
+                <strong class="cod">(Cash on delivery available)</strong>
+            </span>
+        </div>
+        <button *ngIf="!isProductInCart(product.ID)" class="btn-add-to-cart" (click)="addToCart(product)">Add to Cart</button>
+        <button *ngIf="isProductInCart(product.ID)" class="btn-add-to-cart" style="background-color: #000000 !important;" (click)="goToCart()">Go to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

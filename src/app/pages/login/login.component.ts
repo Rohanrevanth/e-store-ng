@@ -84,7 +84,8 @@ export class LoginComponent {
       next: (response) => {
         console.log(response)
         // this.isLoading = false;
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
+        this.isRegisterMode = false;
       },
       error: (err) => {
         console.log(err)
@@ -98,6 +99,8 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: (response) => {
         console.log(response)
+        localStorage.setItem("user", JSON.stringify(response.user));
+        localStorage.setItem("token", response.token);
         // this.isLoading = false;
         this.router.navigate(['/home']);
       },

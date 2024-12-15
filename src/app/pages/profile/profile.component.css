@@ -1,0 +1,131 @@
+/* Hero Banner */
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(to right, #ffa726, #ff8a00);
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  /* border-radius: 8px; */
+  /* margin-bottom: 2rem; */
+}
+
+.hero-banner .hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-banner .hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-banner .hero-btn {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+}
+
+.orders-container {
+  background-color: #1a1a1a;
+  padding: 20px;
+  color: white;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* One column for orders */
+  gap: 20px; /* Space between orders */
+}
+
+.order-card {
+  background-color: #2b2b2b;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ffa726;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-between; /* Items in the same row, spaced out */
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.order-header {
+  flex: 1; /* Take up remaining space */
+}
+
+.shipping-details {
+  flex: 1;
+  text-align: right;
+}
+
+.order-header h2 {
+  color: #ffa726;
+  font-size: 1.5rem;
+}
+
+.order-header p {
+  color: #ddd;
+  /* margin: 5px 0; */
+}
+
+.shipping-details h3 {
+  color: #ffa726;
+}
+
+.shipping-details p {
+  color: #ddd;
+}
+
+.order-items {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for the products */
+  margin-top: 15px;
+  gap: 15px; /* Space between product boxes */
+}
+
+.order-item {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  width: calc(33% - 10px); /* Three items per row */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.order-item h4 {
+  color: #ffa726;
+  font-size: 1.1rem;
+}
+
+.order-item p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Product Image */
+.product-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-top: 10px;
+  
+}
+
+@media (max-width: 768px) {
+  .order-item {
+    width: calc(50% - 10px); /* Two items per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .order-item {
+    width: 100%; /* One item per row on very small screens */
+  }
+}

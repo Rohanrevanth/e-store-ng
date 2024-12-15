@@ -4,10 +4,11 @@ import { HeaderComponent } from '../../components/header/header.component'; // U
 import { FooterComponent } from '../../components/footer/footer.component'; // Update path as per your structure
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ProductDisplayComponent } from '../../components/product-display/product-display.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, HeaderComponent, ProductDisplayComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -17,8 +18,18 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
   ) {
-
+    var userObjStr = localStorage.getItem("user");
+    if(userObjStr) {
+      this.user = JSON.parse(userObjStr);
+      console.log(this.user);
+    }
   }
+
+  modalProduct : any = {}
+  displayProduct = false;
+
+  cart: any = {};
+  user : any = {};
 
   categories : any[] = []
   // categories = [
@@ -51,10 +62,39 @@ export class HomeComponent implements OnInit {
 
   bestSellers : any[] = []
 
-
   ngOnInit(): void {
     this.getCategories();
     this.getBestSellers();
+    this.getUserCart();
+  }
+  
+  getUserCart(): void {
+    this.productService.getUserCart().subscribe({
+      next: (response) => {
+        console.log(response)
+        this.cart = response.data;
+        console.log(this.cart)
+        // localStorage.setItem("categories",JSON.stringify(this.categories))
+        // this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err)
+        // this.isLoading = false;
+      },
+    });
+  }
+
+  isProductInCart(productId : number) : boolean {
+    if(this.cart.items) {
+      var foundProduct = this.cart.items.find((productItem: any) => productItem.product_id === productId);
+      if (foundProduct) {
+        return true;
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
   }
 
   getCategories(): void {
@@ -106,16 +146,38 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  cart: any[] = [];
+  openProductModal(product : any) {
+    this.modalProduct = product;
+    this.displayProduct = true;
+  }
+
+  closeModal() {
+    this.displayProduct = false;
+  }
 
   addToCart(product: any) {
-    this.cart.push(product);
-    alert(`${product.name} has been added to your cart!`);
+    this.productService.addToCart([product], 1).subscribe({
+      next: (response) => {
+        console.log(response);
+        alert(`${product.name} has been added to your cart!`);
+        this.goToCart();
+        // this.bestSellers[index].image = response.photos[0].src.original;
+        // this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err)
+        // this.isLoading = false;
+      },
+    });
   }
 
   goToCategory(category : any) {
     // this.router.navigate(['/category/'+category.name.toLowerCase()]);
     localStorage.setItem('category', JSON.stringify(category))
     this.router.navigate(['/category/'+category.name]);
+  }
+
+  goToCart() {
+    this.router.navigate(['/checkout']);
   }
 }
