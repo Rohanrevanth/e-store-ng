@@ -1,0 +1,49 @@
+<div class="modal-backdrop" (click)="onBackdropClick()"></div>
+<div class="modal">
+  <div class="modal-content">
+    <!-- Order Overview -->
+    <div class="order-section">
+      <h2>Order Details</h2>
+      <p><strong>User ID:</strong> {{ order.user_id }}</p>
+      <p><strong>Order ID:</strong> {{ order.ID }}</p>
+      <p><strong>Order Status:</strong> {{ order.status }}</p>
+      <p><strong>Created At:</strong> {{ formatDate(order.CreatedAt) }}</p>
+      <p><strong>Last Updated:</strong> {{ formatDate(order.UpdatedAt) }}</p>
+      <p><strong>Payment Method:</strong> {{ order.payment_method.toUpperCase() }}</p>
+    </div>
+
+
+    <!-- Order Items -->
+    <div class="order-section">
+      <h2>Order Items</h2>
+      <div *ngFor="let item of order.order_items" class="order-item-card">
+        <h3>{{ item.product.name }}</h3>
+        <img [src]="item.product.image" alt="{{ item.product.name }}" />
+        <p><strong>Description:</strong> {{ item.product.description }}</p>
+        <p><strong>Category:</strong> {{ item.product.category }}</p>
+        <p><strong>Price:</strong> {{ item.price }}</p>
+        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+      </div>
+    </div>
+
+    <div style="display: flex;">
+    <!-- Payment Summary -->
+    <div class="order-section">
+        <h2>Payment & Discounts</h2>
+        <p><strong>Total Price:</strong> {{ order.total_price }}</p>
+        <p><strong>Discount Applied:</strong> {{ order.discount ? order.discount : '-' }}</p>
+        <p><strong>Coupon Code Used:</strong> {{ order.coupon_code ? order.coupon_code : '-' }}</p>
+      </div>
+  
+      <!-- Shipping Details -->
+      <div class="order-section" style="margin: auto; margin-right: 0px;">
+        <h2>Shipping Details</h2>
+        <p><strong>Name:</strong> {{ shippingDetails.name }}</p>
+        <p><strong>Address:</strong> {{ shippingDetails.address }}</p>
+        <p><strong>City:</strong> {{ shippingDetails.city }} , {{ shippingDetails.zip }}</p>
+        <p><strong>Phone:</strong> {{ shippingDetails.phone }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>

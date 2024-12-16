@@ -20,6 +20,7 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
   ) {
+    localStorage.clear();
     this.authForm = this.fb.group({
       name: [''],
       email: ['', [Validators.required, Validators.email]],
@@ -102,7 +103,11 @@ export class LoginComponent {
         localStorage.setItem("user", JSON.stringify(response.user));
         localStorage.setItem("token", response.token);
         // this.isLoading = false;
-        this.router.navigate(['/home']);
+        if(response.user.type == 'ADMIN') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         console.log(err)

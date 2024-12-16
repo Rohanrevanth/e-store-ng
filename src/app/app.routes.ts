@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
     {
@@ -29,5 +30,9 @@ export const routes: Routes = [
     {
         path: "profile",
         component: ProfileComponent
+    },
+    {
+        path: "admin",
+        component: AdminPanelComponent
     }
 ];

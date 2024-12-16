@@ -1,0 +1,199 @@
+<app-header></app-header>
+
+<!-- Hero Section -->
+<div class="hero-banner">
+    <div class="hero-content">
+        <h1>Hello {{user.username}}, Welcome to eStore Admin Panel</h1>
+        <p>This is a basic dashboard with orderss data and adding/modifying coupons.</p>
+    </div>
+</div>
+
+<div class="coupon-container">
+    <h2>Available Coupons</h2>
+    <div class="card-wrapper">
+        <!-- Coupon Card -->
+        <div class="card" *ngFor="let coupon of coupons">
+            <div class="card-content card-content-read" *ngIf="!coupon.isEditable" style="font-size: 18px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"> <p><strong>Code :</strong></p> <span>{{ coupon.code }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"> <p><strong>Discount :</strong></p> <span>{{ coupon.discount }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"> <p><strong>Order Frequency :</strong></p> <span>{{ coupon.order_frequency }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"> <p><strong>Created at :</strong></p> <span>{{ coupon.CreatedAt | date:' HH:mm , dd-MM-yyyy' }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;" *ngIf="coupon.UpdatedAt != coupon.CreatedAt"> <p><strong>Updated at :</strong></p> <span>{{ coupon.UpdatedAt | date:' HH:mm , dd-MM-yyyy' }}</span></div>
+            </div>
+            <div class="card-content" *ngIf="coupon.isEditable">
+                <label for="code">Code</label>
+                <input type="text" id="code" [(ngModel)]="coupon.code" [readonly]="!coupon.isEditable" placeholder="Enter Code" />
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" [(ngModel)]="coupon.discount" [readonly]="!coupon.isEditable" placeholder="Enter Discount" />
+                <label for="frequency">Order Frequency</label>
+                <input type="number" id="frequency" [(ngModel)]="coupon.order_frequency" [readonly]="!coupon.isEditable" placeholder="Enter Frequency" />
+            </div>
+            <div class="card-actions">
+                <button *ngIf="!coupon.isEditable" (click)="editCoupon(coupon)">Edit</button>
+                <button *ngIf="coupon.isEditable" (click)="saveCoupon(coupon)">Save</button>
+                <button *ngIf="coupon.isEditable" (click)="cancelEdit(coupon)">Cancel</button>
+                <button (click)="deleteCoupon(coupon)">Delete</button>
+            </div>
+        </div>
+
+        <div class="card" (click)="toggleAddCouponForm()" style="justify-content: center;text-align: center; cursor: pointer;" *ngIf="!isAddingCoupon">
+            <div class="card-content">
+                <!-- <i class="fas fa-plus-circle"></i> -->
+                <span>Add Coupon</span>
+            </div>
+        </div>
+        <div class="card" *ngIf="isAddingCoupon">
+            <div class="card-content">
+                <label for="code">Code</label>
+                <input type="text" id="code" [(ngModel)]="newCoupon.code" placeholder="Enter Code" />
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" [(ngModel)]="newCoupon.discount" placeholder="Enter Discount" />
+                <label for="frequency">Order Frequency</label>
+                <input type="number" id="frequency" [(ngModel)]="newCoupon.order_frequency" placeholder="Enter Frequency" />
+            </div>
+            <div class="card-actions">
+                <button (click)="saveCoupon(newCoupon)">Save</button>
+                <button (click)="cancelAddCoupon()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <h2>Admin Summary</h2> -->
+<div class="admin-summary">
+<!-- Orders Summary -->
+<div class="summary-section">
+    <h2>Orders Summary</h2>
+    <div class="summary-item">
+      <p><strong>Total Orders:</strong></p>
+      <span>{{ totalOrders }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Total Revenue:</strong></p>
+      <span>{{ '₹ '+totalRevenue.toFixed(2) }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Average Order Value:</strong></p>
+      <span>{{ '₹ '+avgOrderValue.toFixed(2) }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Orders Pending:</strong></p>
+      <span>{{ pendingOrders }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Orders Shipped:</strong></p>
+      <span>{{ shippedOrders }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Orders Completed:</strong></p>
+      <span>{{ completedOrders }}</span>
+    </div>
+  </div>
+  
+  <!-- Products Summary -->
+  <div class="summary-section">
+    <h2>Products Summary</h2>
+    <div class="summary-item">
+      <p><strong>Total Products Sold:</strong></p>
+      <span>{{ totalProductsSold }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Top Selling Product:</strong></p>
+      <span *ngIf="topSellingProduct">{{ topSellingProduct.name }} ({{ topSellingProduct.quantity }} sold)</span>
+      <span *ngIf="!topSellingProduct">-</span>
+    </div>
+    <div class="summary-item" >
+      <p><strong>Revenue from Top Product:</strong></p>
+      <span>{{ topSellingProduct ? '₹ '+topSellingProduct.revenue.toFixed(2) : 0 }}</span>
+    </div>
+  </div>
+  
+  <!-- Coupons Summary -->
+  <div class="summary-section">
+    <h2>Coupons Summary</h2>
+    <div class="summary-item">
+      <p><strong>Total Coupons:</strong></p>
+      <span>{{ totalCoupons }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Total Discount Provided:</strong></p>
+      <span>{{ totalCouponDiscount ? '₹ '+totalCouponDiscount.toFixed(2) : 0 }}</span>
+    </div>
+    <div class="summary-item">
+      <p><strong>Most Used Coupon:</strong></p>
+      <span *ngIf="mostUsedCoupon.coupon">{{ mostUsedCoupon.coupon }} (Used {{ mostUsedCoupon.count }} times)</span>
+      <span *ngIf="!mostUsedCoupon.coupon">-</span>
+    </div>
+    <div class="summary-item" *ngIf="topDiscountCoupon">
+      <p><strong>Top Discount Coupon:</strong></p>
+      <span *ngIf="topDiscountCoupon.coupon">{{ topDiscountCoupon.coupon }} ({{ topDiscountCoupon.totalDiscount.toFixed(2) }} provided)</span>
+      <span *ngIf="!topDiscountCoupon.coupon">-</span>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="orders-section">
+  <!-- <h2>Orders List</h2> -->
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>User ID</th>
+        <th>Payment Method</th>
+        <th>Status</th>
+        <th>No of Items</th>
+        <th>Total Price</th>
+        <th>Coupon Code</th>
+        <th>Discount</th>
+        <th>Order Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders" (click)="showOrder(order)" style="cursor: pointer;">
+        <td>#{{ order.ID }}</td>
+        <td>{{ order.user_id }}</td>
+        <td>{{ order.payment_method.toUpperCase() }}</td>
+        <td>{{ order.status.toUpperCase() }}</td>
+        <td>{{ calculateProductsInOrder(order) }}</td>
+        <td>{{ order.total_price ? '₹ '+order.total_price.toFixed(2) : 0 }}</td>
+        <td>{{ order.coupon_code ? order.coupon_code : '-' }}</td>
+        <td>{{ order.discount ? '₹ '+order.discount.toFixed(2) : '-' }}</td>
+        <td>{{ formatDate(order.CreatedAt) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <div class="no-orders">
+    <p>No orders found.</p>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+<app-order-details 
+  *ngIf="showOrderDetails"
+  [order]="modalOrder"
+  (closeModal)="closeModal()">
+</app-order-details>

@@ -5,6 +5,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { ProductDisplayComponent } from "../../components/product-display/product-display.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +17,8 @@ export class CheckoutComponent {
   constructor(
     private router: Router,
     private productService: ProductService,
+    private toastr: ToastrService,
+
   ) {
     var userObjStr = localStorage.getItem("user");
     if(userObjStr) {
@@ -114,7 +117,8 @@ export class CheckoutComponent {
     this.productService.addToCart([product], 1).subscribe({
       next: (response) => {
         console.log(response);
-        alert(`${product.name} has been added to your cart!`);
+        this.toastr.warning( `${product.name} has been added to your cart!`, 'Cart Updated!');
+
         this.getUserCart();
         // this.bestSellers[index].image = response.photos[0].src.original;
         // this.isLoading = false;
@@ -144,7 +148,7 @@ export class CheckoutComponent {
     this.productService.deleteFromCart([product], count).subscribe({
       next: (response) => {
         console.log(response);
-        alert(`${product.name} has been deleted from your cart!`);
+        this.toastr.warning( `${product.name} has been deleted from your cart!`, 'Cart Updated!');
         this.getUserCart();
         // this.bestSellers[index].image = response.photos[0].src.original;
         // this.isLoading = false;
@@ -193,7 +197,7 @@ export class CheckoutComponent {
       (this.shippingDetails.phone && this.shippingDetails.phone.trim() == '') || 
       (this.shippingDetails.name && this.shippingDetails.name.trim() == '') || 
       this.paymentMethod.trim() == '' || 
-      this.cart.items.length == 0) {
+      !this.cart || this.cart.items.length == 0) {
       return true;
     }
     return false;
@@ -295,7 +299,7 @@ export class CheckoutComponent {
     this.productService.placeOrder(body).subscribe({
       next: (response) => {
         console.log(response);
-        alert(`Order has been placed!`);
+        this.toastr.warning( `Order has been placed!`, 'Success!');
         this.router.navigate(['/home']);
         // this.getUserCart();
         // this.bestSellers[index].image = response.photos[0].src.original;

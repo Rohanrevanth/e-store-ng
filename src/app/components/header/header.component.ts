@@ -15,6 +15,8 @@ export class HeaderComponent {
     items : []
   }
 
+  isAdmin = false;
+
   constructor(
     private router: Router,
     private productService: ProductService,
@@ -22,6 +24,9 @@ export class HeaderComponent {
     var userObjStr = localStorage.getItem("user");
     if(userObjStr) {
       this.user = JSON.parse(userObjStr);
+      if(this.user.type == 'ADMIN') {
+        this.isAdmin = true;
+      }
       console.log(this.user);
       this.getUserCart();
     }
@@ -43,6 +48,9 @@ export class HeaderComponent {
   }
 
   goToHome() {
+    if(this.isAdmin) {
+      return;
+    }
     this.router.navigate(['/home']);
   }
 
@@ -52,5 +60,13 @@ export class HeaderComponent {
 
   goToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+    setTimeout(() => {
+      window.location.reload();      
+    }, 1000);
   }
 }

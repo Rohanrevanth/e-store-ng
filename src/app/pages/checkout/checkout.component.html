@@ -28,7 +28,7 @@
           <span>Add Address</span>
         </div>
       </div>
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" *ngIf="shippingDetails">
         <div class="form-group">
           <label for="name">Full Name</label>
           <input type="text" id="name" [(ngModel)]="shippingDetails.name" name="name" required [disabled]="!isAddressEditing" />
@@ -67,9 +67,9 @@
         <p class="product-name">{{ item.product.name }}</p>
         <p>Price: ₹{{ item.product.price.toFixed(2) }}</p>
         <div class="quantity-controls">
-          <button (click)="decreaseQuantity(i)" [disabled]="item.quantity <= 1">-</button>
+          <button (click)="decreaseQuantity(i); $event.stopPropagation()" [disabled]="item.quantity <= 1">-</button>
           <input type="text" [value]="item.quantity" readonly />
-          <button (click)="increaseQuantity(i)">+</button>
+          <button (click)="increaseQuantity(i); $event.stopPropagation()">+</button>
         </div>
         <p>Total: ₹{{ (item.product.price * item.quantity).toFixed(2) }}</p>
       </div>

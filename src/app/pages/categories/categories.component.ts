@@ -9,7 +9,7 @@ import { ProductDisplayComponent } from '../../components/product-display/produc
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule, HeaderComponent, FooterComponent, ProductDisplayComponent],
+  imports: [CommonModule, HeaderComponent, ProductDisplayComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })

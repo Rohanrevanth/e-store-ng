@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 import { ProductDisplayComponent } from '../../components/product-display/product-display.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductService,
+    private toastr: ToastrService,
   ) {
     var userObjStr = localStorage.getItem("user");
     if(userObjStr) {
@@ -87,7 +89,7 @@ export class ProfileComponent implements OnInit {
     this.productService.addToCart([product], 1).subscribe({
       next: (response) => {
         console.log(response);
-        alert(`${product.name} has been added to your cart!`);
+        this.toastr.warning( `${product.name} has been added to your cart!`, 'Cart Updated!');
         this.goToCart();
         // this.bestSellers[index].image = response.photos[0].src.original;
         // this.isLoading = false;

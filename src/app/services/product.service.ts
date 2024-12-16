@@ -35,22 +35,34 @@ export class ProductService {
 
   // Login API call
   getCategories(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/categories`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(`${this.apiUrl}/categories`, {headers});
   }
 
   getBestSellers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/best-sellers`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(`${this.apiUrl}/best-sellers`, {headers});
   }
 
   getAllProducts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/all-products`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(`${this.apiUrl}/all-products`, {headers});
   }
 
   getProducts(category : string): Observable<any> {
     var body = {
       category : category
     }
-    return this.http.post(`${this.apiUrl}/get-products`, JSON.stringify(body));
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.post(`${this.apiUrl}/get-products`, JSON.stringify(body), {headers});
   }
 
   getUserCart(): Observable<any> {
