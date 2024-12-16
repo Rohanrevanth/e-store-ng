@@ -1,59 +1,135 @@
-# EStoreNg
+# E-Commerce Frontend Application
 
+This is the frontend application for an e-commerce website, built using Angular. It provides a dynamic and interactive user interface for customers to browse products, manage their orders, and make purchases. The application communicates with the backend API (hosted locally at `http://localhost:8080`) to fetch and manage data.
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
 
-## Development server
+---
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
+- **Product Browsing**: View product listings with details such as name, price, and description.
+- **Order Management**: Place new orders, view order history, and track order details.
+- **Discount Coupons**: Apply discount coupons during checkout.
+- **Admin Dashboard**: Manage orders, view summary statistics, and analyze coupon usage.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+
+---
+
+## Prerequisites
+
+To run this application, ensure you have the following installed:
+
+1. [Node.js](https://nodejs.org/) (v14 or later)
+2. [Angular CLI](https://angular.io/cli) (v15 or later)
+
+---
+
+## Getting Started
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/Rohanrevanth/e-store-ng
+   cd e-store-ng
+   ```
+
+2. **Install Dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the Development Server:**
+
+   ```bash
+   ng serve
+   ```
+
+   The application will be accessible at `http://localhost:4200/`.
+
+4. **Configure Backend API URL:**
+
+   Update the `apiUrl` in the files of `src/app/service/` folder to match the backend API base URL:
+
+---
+
+## Project Structure
+
+```
+e-store-ng/
+├── src/
+│   ├── app/
+│   │   ├── components/          # Reusable components (e.g., product card, navbar, etc.)
+│   │   ├── pages/               # Page-level components (e.g., Home, Checkout, Admin Dashboard)
+│   │   └── services/            # Angular services for API interactions
+│   └── styles/                  # Global SCSS styles
+├── angular.json                 # Angular configuration
+├── package.json                 # Dependencies and scripts
+└── README.md                    # Project documentation
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Key Components
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Components
 
-```bash
-ng generate component component-name
-```
+- **Product List:** Displays all available products.
+- **Order Summary:** Shows order details, status, and payment information.
+- **Admin Dashboard:** Offers insights into orders, products, and coupon statistics.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Available Scripts
 
-## Building
+- **Run Development Server:**
 
-To build the project run:
+  ```bash
+  npm start
+  ```
 
-```bash
-ng build
-```
+- **Run Unit Tests:**
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+  ```bash
+  ng test
+  ```
 
-## Running unit tests
+- **Build for Production:**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+  ```bash
+  ng build --prod
+  ```
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## Deployment
 
-For end-to-end (e2e) testing, run:
+1. Build the project for production:
 
-```bash
-ng e2e
-```
+   ```bash
+   ng build --prod
+   ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. The output files will be available in the `dist/` folder. Host these files on any static hosting service such as [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), or a custom web server.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Backend Integration
+
+Ensure the backend API (Go-based application) is running locally on `http://localhost:8080` or update the `apiUrl` in files of /services folder.
+
+---
+
+## Dependencies
+
+- **Angular**: Core framework for building the application.
+- **RxJS**: For handling asynchronous events and data streams.
+- **Bootstrap**: For responsive and aesthetic design.
+- **ngx-toastr**: For user notifications.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
